@@ -9,17 +9,15 @@ import { ThemeType } from '../../components/theme';
 const Post = ({ data, isDetails, onPostCallback }: PostProps) => {
     const { theme } = useTheme()
     const styles = useMemo(() => createStyle(theme), [theme])
+
     const onPostPress = useCallback(() => {
         onPostCallback?.(data);
     }, [onPostCallback, data]);
 
     return (
-        <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={onPostPress} style={[styles.postContainer, { backgroundColor: theme.white }]}>
-            <Text style={styles.title}>{data.title}</Text>
+        <TouchableOpacity activeOpacity={0.8} onPress={onPostPress} style={[styles.postContainer, { backgroundColor: theme.white }]}>
+            <Text numberOfLines={isDetails ? undefined : 1} style={styles.title}>{data.title}</Text>
             <Text numberOfLines={isDetails ? undefined : 2} style={styles.description}>{data.body}</Text>
-
         </TouchableOpacity>
     )
 }
@@ -33,7 +31,7 @@ const createStyle = (theme: ThemeType) => StyleSheet.create({
         padding: scale(12),
         borderRadius: scale(8),
         backgroundColor: theme.white,
-        shadowColor: '#000',
+        shadowColor: theme.text,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 3,
